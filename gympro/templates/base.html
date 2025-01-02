@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Sporto GURU</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 4 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <div class="container-fluid">
+        {% if request.path == '/gympro/' %}
+          <video autoplay muted loop class="video-background">
+            <source src="{% static 'videos/videoplayback.mp4' %}" type="video/mp4">
+          </video>
+        {% endif %}
+    <div class="row">
+      <!-- Šoninė juosta -->
+      <div class="col-sm-2 sidebar">
+        {% block sidebar %}
+          <ul class="sidebar-nav">
+            <img src="{% static 'images/logo.png' %}" alt="Sporto GURU" class="img-fluid" style="width: 100%; height: auto;">
+            <li><a href="{% url 'apiemus' %}" class="btn btn-link">APIE MUS</a></li>
+            <li><a href="{% url 'treneriai' %}" class="btn btn-link">TRENERIAI</a></li>
+            <li><a href="{% url 'tvarkarastis' %}" class="btn btn-link">TVARKARAŠTIS</a></li>
+            <li><a href="{% url 'sporto_sales' %}" class="btn btn-link">SPORTO SALĖS</a></li>
+            <li><a href="{% url 'narystes' %}" class="btn btn-link">NARYSTĖ</a></li>
+            <br><br><br>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}" class="btn btn-link">Mano profilis</a></li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" >Atsijungti</button>
+                    </form>
+                </li>
+                {% else %}
+                <li><a href="{% url 'login'%}" class="btn btn-link">Prisijungti</a></li>
+                <li><a href="{% url 'register'%}" class="btn btn-link">Registruotis</a></li>
+                {% endif %}
+          </ul>
+        {% endblock %}
+      </div>
+      <!-- Pagrindinis turinys -->
+          {% block content %}
+          {% endblock %}
+    </div>
+  </div>
+</body>
+</html>

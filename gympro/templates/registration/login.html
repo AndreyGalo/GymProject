@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-sm-10">
+    <div clas="register messages">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    </div>
+  {% if form.errors %}
+    <p>Prisijungimo klaida, bandykite dar kartą!</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Neturite prieigos prie šios informacijos. Turite prisijungti.</p>
+    {% endif %}
+  {% endif %}
+  
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>Vartotojo vardas: </td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>Slaptažodis: </td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Prisijungti" class="btn btn-primary btn-sm text-dark " />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+  
+  <p><a href="{% url 'password_reset' %}">Pamiršote slaptažodį?</a></p>
+</div>
+{% endblock %}

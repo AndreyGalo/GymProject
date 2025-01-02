@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-sm-10">
+    <div class="treneris">
+        <h4>{{ treneris.first_name }} {{ treneris.last_name }}</h4>
+            <div class="treneris-info">
+                <p><strong>Specializacija:</strong> {{ treneris.specialization }}</p>
+                <p>{{ treneris.bio }}</p>
+            </div>
+        <div class="profile-photo">
+            {% if treneris.photo %}
+                <img src="{{ treneris.photo.url }}" alt="{{ treneris.first_name }} {{ treneris.last_name }}" class="img-thumbnail">
+            {% else %}
+                <p>Nuotrauka nepateikta.</p>
+            {% endif %}
+        </div>
+            <h4>Trenerio tvarkaraštis</h4>
+        <div class="table-treneris">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pavadinimas</th>
+                        <th>Data/laikas</th>
+                        <th>Registracija</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for uzsiemimas in trenerio_tvarkarastis %}
+                    <tr>
+                        <td>{{ uzsiemimas.name }}</td>
+                        <td>{{ uzsiemimas.schedule|date:"Y-m-d H:i" }}</td>
+<td>
+            <form method="post" action="{% url 'register_class' class_id=uzsiemimas.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">
+                    {% if user.is_authenticated %}Registruotis{% else %}Prisijungti{% endif %}
+                </button>
+            </form>
+</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">Šiuo metu nėra suplanuotų užsiėmimų.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+                <h4>Kontaktai</h4>
+        <ul>
+            {% if treneris.contact_email %}
+                <li><a href="mailto:{{ treneris.contact_email }}">{{ treneris.contact_email }}</a></li>
+            {% endif %}
+        </ul>
+        <ul class="align-items: center">
+            {% if treneris.instagram %}
+                <li>
+                    <a href="{{ treneris.instagram }}" target="_blank" class="social-icon">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if treneris.facebook %}
+                <li>
+                    <a href="{{ treneris.facebook }}" target="_blank" class="social-icon">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if treneris.linkedin %}
+                <li>
+                    <a href="{{ treneris.linkedin }}" target="_blank" class="social-icon">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+</div>
+{% endblock %}

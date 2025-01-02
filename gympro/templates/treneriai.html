@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="col-sm-10">
+    <div class="container-treneriai">
+        <h4>Treneriai</h4>
+        <div class="row">
+            {% for treneris in treneriai %}
+                <div class="col-md-4">
+                    <div class="card-treneriai">
+                        {% if treneris.photo %}
+                            <img src="{{ treneris.photo.url }}" class="card-img-top" alt="{{ treneris.first_name }} {{ treneris.last_name }}">
+                        {% else %}
+                            <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="logotipas">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'treneris' treneris.id %}">{{ treneris.first_name }} {{ treneris.last_name }}</a></h5>
+                            <br>
+                            <p class="card-text"><strong>Specializacija:</strong> {{ treneris.specialization }}</p>
+                            <p class="card-text">{{ treneris.contact_email }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

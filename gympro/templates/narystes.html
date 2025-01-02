@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="col-sm-10">
+    <div class="container sporto-sales">
+        <h4>Sporto salės</h4>
+        <div class="row">
+            {% for naryste in narystes %}
+                <div class="col-md-4">
+                    <div class="card">
+                        {% if naryste.photo %}
+                            <img src="{{ naryste.photo.url }}" class="card-img-top" alt="sales foto">
+                        {% else %}
+                            <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="logotipas">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ naryste.name }}</h5>
+                            <p> {{ naryste.monthly_fee }} </p>
+                            <a href="#" class="btn custom-btn">PAKEIST</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
