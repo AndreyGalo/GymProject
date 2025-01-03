@@ -1,15 +1,15 @@
 /* Bendra svetainės fonas ir teksto spalvos */
 body {
   background-color: #121212; /* Tamsus fonas */
-  color: #e0e0e0; /* Šviesus tekstas */
-  font-family: 'Arial', sans-serif; /* Pagrindinis šriftas */
+  color: #e0e0e0;
+  font-family: 'Arial', sans-serif;
 }
 html, body {
-  height: 100%; /* Užtikrina, kad html ir body užimtų visą ekraną */
-  margin: 0; /* Pašalina numatytuosius tarpelius */
+  height: 100%;
+  margin: 0;
 }
 .container-fluid {
-  height: 100vh; /* Užtikrina, kad container-fluid užims visą ekraną */
+  height: 100vh;
 }
 
 /* SIDEBAR ir puslapio kraštai */
@@ -43,7 +43,7 @@ html, body {
 .sidebar-nav a:hover {
     text-decoration: none; /* Užtikriname, kad ir užvedus pabraukimo nebūtų */
     background-color: #343a40; /* Tamsiai pilka */
-    color: #ffffff; /* Baltas tekstas */
+    color: #ffffff;
     outline: none; /* Pašalina kontūro efektą, kuris gali keisti elementų išdėstymą */
 }
 
@@ -73,7 +73,7 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 400px;
-    width: 300px; /* Fiksuotas plotis kortelei */
+    width: 300px;
 }
 
 .card-title {

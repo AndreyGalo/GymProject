@@ -3,46 +3,64 @@
 {% block content %}
 {% load static %}
 <div class="col-sm-10">
-
     <h4 class="lead text-center">Sveiki {{ user.get_username }}, čia prasideda jūsų kelionė į geresnę savijautą ir fizinę formą!</h4>
-    <div class="row justify-content-center">
-        <div class="col-md-4 text-center">
-            <img src="{% static 'images/logo.png' %}" class="img-fluid rounded">
-        </div>
-    </div>
-        <div class="row mt-4">
         <!-- Asmeninė informacija -->
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-body">
-                    <h4 class="card-title">Jūsų narystė</h4>
-                        <p>{{ member.membership_type.name }}</p>
-                        <p>www{{ memberships.end_date}}</p>
+            <div class="container_profilionaryste d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="card mb-4" style="background-color: #121212; color: white; font-size: 0.9rem;">
+                        <div class="card-body">
+                        <h4 class="card-title">Jūsų narystė</h4>
+                            {% if membership_photo %}
+                                <img src="{{ membership_photo.url }}" alt="Narystės logotipas" style="max-width: 350px;">
+                            {% else %}
+                                <img src="{% static 'images/default_logo.png' %}" alt="Numatytasis logotipas">
+                            {% endif %}
+                            <p>www{{ memberships.end_date}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Užregistruotos treniruotės -->
-        <div class="col-md-6">
-            <div class="card mb-4">
+            <div class="card mb-4" style="background-color: #121212; color: white;">
                 <div class="card-body">
                     <h4 class="card-title">Užregistruotos treniruotės</h4>
                     {% if bookings %}
-                    <ul class="list-group">
-                        {% for booking in bookings %}
-                        <li class="list-group-item">
-                            <strong>{{ booking.class_session.name }}</strong><br>
-                            Instruktorius: {{ booking.class_session.instructor.first_name }} {{ booking.class_session.instructor.last_name }}<br>
-                            Data: {{ booking.class_session.schedule|date:"Y-m-d H:i" }}
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Pavadinimas</th>
+                                <th>Treneris</th>
+                                <th>Data/laikas</th>
+                                <th>Registracijos data</th>
+                                <th>Veiksmai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.class_session.name }}</td>
+                                <td>{{ booking.class_session.instructor.first_name }} {{ booking.class_session.instructor.last_name }}</td>
+                                <td>{{ booking.class_session.schedule|date:"Y-m-d H:i" }}</td>
+                                <td>{{ booking.booking_date|date:"Y-m-d H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'unregister_class' class_id=booking.class_session.id %}" class="btn btn-danger">
+                                        Išsiregistruoti
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                     {% else %}
                     <p>Šiuo metu neturite užsiregistruotų treniruočių.</p>
                     {% endif %}
                 </div>
             </div>
+        <div class="row justify-content-center">
+        <div class="col-md-4 text-center">
+            <img src="{% static 'images/logo.png' %}" class="img-fluid rounded">
         </div>
     </div>
+</div>
 {% endblock %}

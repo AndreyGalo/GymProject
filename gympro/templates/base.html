@@ -28,14 +28,16 @@
             <li><a href="{% url 'treneriai' %}" class="btn btn-link">TRENERIAI</a></li>
             <li><a href="{% url 'tvarkarastis' %}" class="btn btn-link">TVARKARAŠTIS</a></li>
             <li><a href="{% url 'sporto_sales' %}" class="btn btn-link">SPORTO SALĖS</a></li>
-            <li><a href="{% url 'narystes' %}" class="btn btn-link">NARYSTĖ</a></li>
+            <li><a href="{% url 'narystes' %}" class="btn btn-link">NARYSTĖS</a></li>
             <br><br><br>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}" class="btn btn-link">Mano profilis</a></li>
-                <li>
-                    <form method="post" action="{% url 'logout' %}">
+                <li style="display: flex; justify-content: center; align-items: center;">
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" >Atsijungti</button>
+                        <button type="submit" class="btn btn-link">
+                            Atsijungti
+                        </button>
                     </form>
                 </li>
                 {% else %}

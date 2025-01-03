@@ -6,6 +6,7 @@ class MembershipPlan(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField("Aprašymas", max_length=200, help_text="Plano aprašymas")
     monthly_fee = models.DecimalField(max_digits=10, decimal_places=2)
+    photo = models.ImageField(upload_to='membership_logos/', blank=True, null=True)
     access_level = models.CharField(
         max_length=50,
         choices=[
@@ -31,7 +32,7 @@ class Member(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     join_date = models.DateField(auto_now_add=True)
-    membership_type = models.ForeignKey("MembershipPlan", on_delete=models.SET_NULL, null=True,default=4)
+    membership_type = models.ForeignKey("MembershipPlan", on_delete=models.SET_NULL, null=True, default=4)
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -47,7 +48,7 @@ class MembershipPurchase(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="purchases")
     membership_plan = models.ForeignKey(MembershipPlan, on_delete=models.CASCADE)
     start_date = models.DateField(auto_now_add=True)
-    end_date = models.DateField(help_text="Narystės galiojimo pabaiga",null=True,blank=True)
+    end_date = models.DateField(help_text="Narystės galiojimo pabaiga", null=True, blank=True)
 
     def __str__(self):
         return f"{self.member} - {self.membership_plan.name}"
@@ -112,11 +113,15 @@ class Class(models.Model):
         ('zumba', 'Zumba'),
         ('fitness', 'Fitness'),
     ])
-    instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True, related_name="classes")
+    instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name="classes")
     sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True)
     schedule = models.DateTimeField(help_text="Įveskite pamokos datą ir laiką.")
     max_capacity = models.IntegerField()
     current_bookings = models.IntegerField(default=0)
+
+    def is_full(self):
+        return self.current_bookings >= self.max_capacity
 
     def __str__(self):
         return self.name

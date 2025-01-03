@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -7,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_protect
 
-from .models import Instructor, Class, SportHall, MembershipPlan, Member, Booking
+from .models import Instructor, Class, SportHall, MembershipPlan, Booking
 
 
 def index(request):
@@ -81,7 +83,8 @@ def tvarkarastis_view(request):
         'page_obj': page_obj,
     }
 
-    return render(request, 'tvarkarastis.html', context)
+    return render(request, 'tvarkarastis.html', context=context)
+
 
 @csrf_protect
 def register(request):
@@ -116,7 +119,7 @@ def register(request):
                     return redirect('register')
                 else:
                     # jeigu viskas tvarkoje, sukuriame naują vartotoją
-                    user = User.objects.create_user(
+                    User.objects.create_user(
                         username=username,
                         email=email,
                         password=password,
@@ -134,30 +137,60 @@ def register(request):
 @login_required
 def profile(request):
     member = request.user.member
-    bookings = Booking.objects.filter(member=member).select_related('class_session')
+    bookings = Booking.objects.filter(member=member).select_related('class_session').order_by('class_session__schedule')
     memberships = member.purchases.all()
+    membership_photo = member.membership_type.photo
     context = {
         'member': member,
         'bookings': bookings,
         'membership': memberships,
+        'membership_photo': membership_photo,
     }
     return render(request, 'accounts/profile.html', context=context)
+
 
 @login_required
 def register_class(request, class_id):
     klase = get_object_or_404(Class, pk=class_id)
     member = request.user.member  # Kiekvienas vartotojas turi Member objektą
 
-    # Patikrinkite, ar vartotojas jau yra užsiregistravęs į šią treniruotę
     if Booking.objects.filter(member=member, class_session=klase).exists():
-        # Jeigu jau yra užsiregistravęs, galite grąžinti klaidos pranešimą arba tiesiog ignoruoti
         return redirect('already_registered')
 
     Booking.objects.create(member=member, class_session=klase)
+    klase.current_bookings += 1
+    klase.save()
     return redirect('registration_success')
+
 
 def registration_success(request):
     return render(request, 'registration_success.html')
 
+
 def already_registered(request):
     return render(request, 'already_registered.html')
+
+
+@login_required
+def unregister_class(request, class_id):
+    member = request.user.member
+    klase = get_object_or_404(Class, id=class_id)
+    booking = Booking.objects.filter(member=member, class_session=klase).first()
+
+    # Patikriname, ar iki treniruotės pradžios liko daugiau nei 24 valandos
+    if klase.schedule - now() < timedelta(hours=24):
+        return redirect('unregister_denied')
+
+    # Pašaliname registraciją
+    booking.delete()
+    klase.current_bookings -= 1
+    klase.save()
+    return redirect('unregister_success')
+
+
+def unregister_success(request):
+    return render(request, 'unregister_success.html')
+
+
+def unregister_denied(request):
+    return render(request, 'unregister_denied.html')

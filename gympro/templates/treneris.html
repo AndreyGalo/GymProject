@@ -23,6 +23,7 @@
                         <th>Pavadinimas</th>
                         <th>Data/laikas</th>
                         <th>Registracija</th>
+                        <th>Užimtumas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,14 +31,20 @@
                     <tr>
                         <td>{{ uzsiemimas.name }}</td>
                         <td>{{ uzsiemimas.schedule|date:"Y-m-d H:i" }}</td>
-<td>
-            <form method="post" action="{% url 'register_class' class_id=uzsiemimas.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">
-                    {% if user.is_authenticated %}Registruotis{% else %}Prisijungti{% endif %}
-                </button>
-            </form>
-</td>
+                        <td>
+                            {% if uzsiemimas.is_full %}
+                                <button class="btn btn-secondary" disabled>Pilna</button>
+                            {% else %}
+                                <form method="post" action="{% url 'register_class' class_id=uzsiemimas.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">
+                                        {% if user.is_authenticated %}Registruotis{% else %}Prisijungti{% endif %}
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                        </td>
+                        <td>{{uzsiemimas.current_bookings}} / {{uzsiemimas.max_capacity}}</td>
                     </tr>
                     {% empty %}
                     <tr>
