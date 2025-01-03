@@ -6,13 +6,33 @@
     <h4>Treniruočių tvarkaraštis</h4>
 
     <!-- Kortelių išdėstymas vienoje eilutėje -->
-    <div class="tvarkarastis">
+    <div class="row">
       {% for class in schedule %}
-        <div class="tvarkarastis-kortele">
-          <h5>{{ class.name }}</h5>
-          <p>{{ class.date }} {{ class.time }}</p>
-          <p>{{ class.coach_vardas }} {{ class.coach_pavarde }}</p>
-          <a href="#">Registruotis</a>
+        <div class="col-md-3 mb-3">  <!-- Kortelė užima 4 stulpelius, o tarp jų yra tarpas -->
+          <div class="card" style="background-color: #495057; color: white;">
+            <div class="card-body">
+              <h5 class="card-title" style="color: #e57373;">{{ class.name }}</h5>
+              <p class="card-text">{{ class.date }}</p>
+              <p><strong>{{ class.time }}</strong></p>
+              <p>
+                 <a href="{% url 'treneris' instructor_id=class.coach_id %}">
+                    {{ class.coach_vardas }} {{ class.coach_pavarde }}
+                 </a>
+              </p>
+
+              <!-- Registracijos forma -->
+              {% if class.is_full %}
+                <button class="btn btn-secondary" disabled>Treniruotė pilna</button>
+              {% else %}
+                <form method="post" action="{% url 'register_class' class_id=class.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">
+                    {% if user.is_authenticated %}Registruotis{% else %}Prisijungti{% endif %}
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
         </div>
       {% endfor %}
     </div>
@@ -26,11 +46,11 @@
           {% for i in page_obj.paginator.page_range %}
             {% if page_obj.number == i %}
               <li class="page-item active">
-                <a class="page-link">{{ i }}</a>
+                <a class="page-link" style="background-color: #495057; color: white;">{{ i }}</a>
               </li>
             {% else %}
               <li class="page-item">
-                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                <a class="page-link" href="?page={{ i }}" style="background-color: #495057; color: white;">{{ i }}</a>
               </li>
             {% endif %}
           {% endfor %}
@@ -40,4 +60,3 @@
   </div>
 </div>
 {% endblock %}
-

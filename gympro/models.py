@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
+from django.utils import timezone
 
 class MembershipPlan(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -116,10 +116,11 @@ class Class(models.Model):
     instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name="classes")
     sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True)
-    schedule = models.DateTimeField(help_text="Įveskite pamokos datą ir laiką.")
+    schedule = models.DateTimeField(help_text="Įveskite pamokos datą ir laiką.", default=timezone.now)
     max_capacity = models.IntegerField()
     current_bookings = models.IntegerField(default=0)
 
+    @property
     def is_full(self):
         return self.current_bookings >= self.max_capacity
 

@@ -112,10 +112,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-DATETIME_FORMAT = 'Y-m-d H:i'  # Pvz.: 2024-12-25 14:30:00
-DATE_FORMAT = 'Y-m-d'  # Pvz.: 2024-12-25
-TIME_FORMAT = 'H:i'  # Pvz.: 14:30
-
 USE_L10N = False
 
 

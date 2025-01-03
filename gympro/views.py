@@ -4,9 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.utils import timezone
+from django.utils.timezone import localtime,now
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_protect
 
 from .models import Instructor, Class, SportHall, MembershipPlan, Booking
@@ -32,8 +31,7 @@ def treneriai(request):
 
 def treneris(request, instructor_id):
     treneris = get_object_or_404(Instructor, pk=instructor_id)
-    today = timezone.now().date()
-    trenerio_tvarkarastis = treneris.classes.filter(schedule__date__gte=today).order_by('schedule')
+    trenerio_tvarkarastis = treneris.classes.filter(schedule__gte=now()).order_by('schedule')
     context = {
         "treneris": treneris,
         "trenerio_tvarkarastis": trenerio_tvarkarastis,
@@ -63,19 +61,23 @@ def tvarkarastis_view(request):
     ir pridedam i nauja sarasa/kintamaji schedule pakeistu datos,laiko formatu ir tiksliu treniruoes pavadinimu(name)
 
     """
-    today = timezone.now().date()
-    classes = Class.objects.filter(schedule__date__gte=today).order_by('schedule')
-    paginator = Paginator(classes, 7)
+    classes = Class.objects.filter(schedule__gte=now()).order_by('schedule')
+    paginator = Paginator(classes, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     schedule = []
     for treniruote in page_obj:
+        # Konvertuojame į vietinį laiką
+        local_schedule = localtime(treniruote.schedule)
         schedule.append({
-            'date': treniruote.schedule.date().strftime("%Y.%m.%d"),
-            'time': treniruote.schedule.time().strftime("%H:%M"),
+            'id': treniruote.id,
+            'date': local_schedule.date().strftime("%Y.%m.%d"),
+            'time': local_schedule.time().strftime("%H:%M"),
             'name': treniruote.name,
             'coach_pavarde': treniruote.instructor.last_name,
             'coach_vardas': treniruote.instructor.first_name,
+            'is_full': treniruote.is_full,
+            'coach_id': treniruote.instructor.id,
         })
 
     context = {
@@ -137,7 +139,7 @@ def register(request):
 @login_required
 def profile(request):
     member = request.user.member
-    bookings = Booking.objects.filter(member=member).select_related('class_session').order_by('class_session__schedule')
+    bookings = Booking.objects.filter(member=member,class_session__schedule__gte=now()).select_related('class_session').order_by('class_session__schedule')
     memberships = member.purchases.all()
     membership_photo = member.membership_type.photo
     context = {
