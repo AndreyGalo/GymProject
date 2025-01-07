@@ -2,39 +2,49 @@
 
 {% block content %}
 <div class="col-sm-10">
-    <div clas="register messages">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-md-4">
+        <div class="text-center"  style="height: 500px; width: 100%; max-width: 800px;">
+          <h4>Prisijungti</h4>
+          <div class="register messages mb-3">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+          </div>
+
+          {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+              Prisijungimo klaida, bandykite dar kartą!
+            </div>
+          {% endif %}
+
+          {% if next %}
+            {% if user.is_authenticated %}
+              <div class="alert alert-warning" role="alert">
+                Neturite prieigos prie šios informacijos. Turite prisijungti.
+              </div>
+            {% endif %}
+          {% endif %}
+
+          <!-- Prisijungimo forma -->
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Vartotojo vardas</label><br>
+              {{ form.username }}
+            </div>
+            <div class="form-group">
+              <label>Slaptažodis</label><br>
+              {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Prisijungti</button>
+            <input type="hidden" name="next" value="{{ next }}" />
+          </form>
+          <p class="mt-3"><a href="{% url 'password_reset' %}">Pamiršote slaptažodį?</a></p>
+        </div>
+      </div>
     </div>
-  {% if form.errors %}
-    <p>Prisijungimo klaida, bandykite dar kartą!</p>
-  {% endif %}
-  
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Neturite prieigos prie šios informacijos. Turite prisijungti.</p>
-    {% endif %}
-  {% endif %}
-  
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>Vartotojo vardas: </td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>Slaptažodis: </td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Prisijungti" class="btn btn-primary btn-sm text-dark " />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
-  
-  <p><a href="{% url 'password_reset' %}">Pamiršote slaptažodį?</a></p>
 </div>
 {% endblock %}

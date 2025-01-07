@@ -112,10 +112,11 @@ class Class(models.Model):
         ('yoga', 'Yoga'),
         ('zumba', 'Zumba'),
         ('fitness', 'Fitness'),
+        ('dance', 'Dance'),
     ])
     instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name="classes")
-    sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True)
+    sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True,related_name="classes")
     schedule = models.DateTimeField(help_text="Įveskite pamokos datą ir laiką.", default=timezone.now)
     max_capacity = models.IntegerField()
     current_bookings = models.IntegerField(default=0)

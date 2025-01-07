@@ -3,12 +3,12 @@
 {% block content %}
 {% load static %}
 <div class="col-sm-10">
-    <div class="container-treneriai">
+    <div class="container visi_treneriai">
         <h4>Treneriai</h4>
         <div class="row">
             {% for treneris in treneriai %}
                 <div class="col-md-4">
-                    <div class="card-treneriai">
+                    <div class="card-treneriai" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
                         {% if treneris.photo %}
                             <img src="{{ treneris.photo.url }}" class="card-img-top" alt="{{ treneris.first_name }} {{ treneris.last_name }}">
                         {% else %}
@@ -18,7 +18,7 @@
                             <h5 class="card-title"><a href="{% url 'treneris' treneris.id %}">{{ treneris.first_name }} {{ treneris.last_name }}</a></h5>
                             <br>
                             <p class="card-text"><strong>Specializacija:</strong> {{ treneris.specialization }}</p>
-                            <p class="card-text">{{ treneris.contact_email }}</p>
+                            <p class="card-text"><a href="mailto:{{ treneris.contact_email }}">{{ treneris.contact_email }}</a></p>
                         </div>
                     </div>
                 </div>

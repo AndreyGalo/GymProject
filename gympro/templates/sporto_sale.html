@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-sm-10">
+    <div class="sale">
+        <h4>{{ sale.name }}</h4>
+        <div class="profile-photo">
+            {% if sale.photo %}
+                <img src="{{ sale.photo.url }}" alt="#" class="img-thumbnail">
+            {% else %}
+                <p>Nuotrauka nepateikta.</p>
+            {% endif %}
+        </div>
+        <h4>Salės treniruotės</h4>
+        <div class="table-treneris">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pavadinimas</th>
+                        <th>Data/laikas</th>
+                        <th>Treneris</th>
+                        <th>Užimtumas</th>
+                        <th>Registracija</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for uzsiemimas in sales_tvarkarastis %}
+                    <tr>
+                        <td>{{ uzsiemimas.name }}</td>
+                        <td>{{ uzsiemimas.schedule|date:"Y-m-d H:i" }}</td>
+                        <td><a href="{% url 'treneris' uzsiemimas.instructor.id %}">{{ uzsiemimas.instructor }}</a></td>
+                        <td>{{ uzsiemimas.current_bookings}} / {{uzsiemimas.max_capacity}}</td>
+                        <td>{% if uzsiemimas.is_full %}
+                                <button class="btn btn-secondary" disabled>Pilna</button>
+                            {% else %}
+                                <form method="post" action="{% url 'register_class' class_id=uzsiemimas.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">
+                                        {% if user.is_authenticated %}Registruotis{% else %}Prisijungti{% endif %}
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">Šiuo metu nėra suplanuotų užsiėmimų.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

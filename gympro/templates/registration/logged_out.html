@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="col-sm-10">
-  <p>Sėkmingai atsijungėte!</p>  
-  <a href="{% url 'login'%}">Prisijungti iš naujo.</a>
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="text-center">
+      <p>Sėkmingai atsijungėte!</p>
+      <a href="{% url 'login'%}" class="btn btn-primary">Prisijungti iš naujo</a>
+    </div>
+  </div>
 </div>
 {% endblock %}

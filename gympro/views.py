@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.utils.timezone import localtime,now
+from django.utils.timezone import localtime, now
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
@@ -43,6 +43,16 @@ def sportosales(request):
     sales = SportHall.objects.all()
     context = {'sales': sales, }
     return render(request, "sporto_sales.html", context=context)
+
+
+def sportosale(request, sporthall_id):
+    sale = get_object_or_404(SportHall, pk=sporthall_id)
+    sales_tvarkarastis = sale.classes.filter(schedule__gte=now()).order_by('schedule')
+    context = {
+        "sale": sale,
+        "sales_tvarkarastis": sales_tvarkarastis,
+    }
+    return render(request, "sporto_sale.html", context=context)
 
 
 def narystes(request):
@@ -139,7 +149,8 @@ def register(request):
 @login_required
 def profile(request):
     member = request.user.member
-    bookings = Booking.objects.filter(member=member,class_session__schedule__gte=now()).select_related('class_session').order_by('class_session__schedule')
+    bookings = Booking.objects.filter(member=member, class_session__schedule__gte=now()).select_related(
+        'class_session').order_by('class_session__schedule')
     memberships = member.purchases.all()
     membership_photo = member.membership_type.photo
     context = {

@@ -8,17 +8,16 @@
         <div class="row">
             {% for sale in sales %}
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card-treneriai" style="border: 1px solid #ccc; border-radius: 5px; padding: 5px;">
                         {% if sale.photo %}
                             <img src="{{ sale.photo.url }}" class="card-img-top" alt="sales foto">
                         {% else %}
                             <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="logotipas">
                         {% endif %}
                         <div class="card-body">
-                            <h5 class="card-title">{{ sale.name }}</h5>
-                            <p class="card-text">{{ sale.hall_type }}</p>
-                            <p class="card-text"><strong>Specializacija:</strong> {{ sale.capacity }}</p>
-                            <a href="#" class="btn custom-btn">PAKEIST</a>
+                            <h5 class="card-title" style="margin-bottom: 20px;"><a href="{% url 'sporto_sale' sale.id %}">{{ sale.name }}</a></h5>
+                            <p class="card-text" style="margin: 5px 0;"><strong>Specializacija:</strong>{{ sale.hall_type }}</p>
+                            <p class="card-text"><strong>Talpumas:</strong> {{ sale.capacity }}</p>
                         </div>
                     </div>
                 </div>
