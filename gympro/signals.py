@@ -1,10 +1,12 @@
+from datetime import timedelta
+
 from django.db.models.signals import post_save, post_delete  # signalas (būna įvairių)
 from django.contrib.auth.models import User  # siuntėjas
 from django.dispatch import receiver  # priėmėjas (dekoratorius)
 from .models import Member, MembershipPlan, MembershipPurchase
 
 
-# Sukūrus vartotoją automatiškai sukuriamas ir narys(member).
+# Sukurus vartotoją automatiskai sukuriamas ir narys(Member).
 @receiver(post_save, sender=User)  # jeigu išsaugojamas User objektas, inicijuojama f-ja po dekoratoriumi
 def create_profile(sender, instance, created, **kwargs):  # instance yra ką tik sukurtas User objektas.
     """
@@ -22,13 +24,20 @@ def create_profile(sender, instance, created, **kwargs):  # instance yra ką tik
         )
 
 
+# Per admin istrynus NARY(Member) issitrina ir user
+@receiver(post_delete, sender=Member)
+def delete_user_with_member(sender, instance, **kwargs):
+    if instance.user:
+        instance.user.delete()
+
+
 # Pakeitus vartotoja automatiskai pasikeicia nario profilis.
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     instance.member.save()
 
 
-# Pridejus Narystes automatiskai priskiria nauja Naryste vartotojui(Nariui)
+# Pridejus/Pakeitus Narystes PIRKIMA automatiskai priskiria nauja Naryste vartotojui(Member)
 @receiver(post_save, sender=MembershipPurchase)
 def update_member_membership(sender, instance, **kwargs):
     """
@@ -40,8 +49,20 @@ def update_member_membership(sender, instance, **kwargs):
         member.membership_type = instance.membership_plan
         member.save()
 
-# Per admin istrynus NARY issitrina ir user
-@receiver(post_delete, sender=Member)
-def delete_user_with_member(sender, instance, **kwargs):
-    if instance.user:
-        instance.user.delete()
+
+# Narystes pirkimas arba per admino pridejimas automatiskai priskria 30 dienu
+@receiver(post_save, sender=MembershipPurchase)
+def set_end_date(sender, instance, created, **kwargs):
+    if created and not instance.end_date:  # Tik naujai sukurtiems objektams
+        instance.end_date = instance.start_date + timedelta(days=30)
+        instance.save()
+
+
+# Narystes pasalinimas per admino puslapi automatiskai priskiria Paprasta naryste
+@receiver(post_delete, sender=MembershipPurchase)
+def remove_membership_from_member(sender, instance, **kwargs):
+    member = instance.member
+    default_membership = MembershipPlan.objects.get(name="Paprastas")
+    if member:
+        member.membership_type = default_membership
+        member.save()

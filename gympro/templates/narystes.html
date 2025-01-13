@@ -4,20 +4,25 @@
 {% load static %}
 <div class="col-sm-10">
     <div class="container sporto-sales">
-        <h4>Sporto salės</h4>
-        <div class="row">
+        <h4>Siūlomos narystės planai</h4>
+        <div class="row" style="display: flex; justify-content: center; gap: 20px;">
             {% for naryste in narystes %}
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card" style="width: 100%; height: 550px; margin-bottom: 20px; border-radius: 8px; background-color: #495057">
                         {% if naryste.photo %}
-                            <img src="{{ naryste.photo.url }}" class="card-img-top" alt="sales foto">
+                            <img src="{{ naryste.photo.url }}" class="card-img-top" alt="logotipas" style="height: 300px; object-fit: cover;">
                         {% else %}
                             <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="logotipas">
                         {% endif %}
                         <div class="card-body">
-                            <h5 class="card-title">{{ naryste.name }}</h5>
-                            <p> {{ naryste.monthly_fee }} </p>
-                            <a href="#" class="btn custom-btn">PAKEIST</a>
+                            <h5 class="card-title" style="font-size: 1.25rem; font-weight: bold;">{{ naryste.name }}</h5>
+                            <p> {{ naryste.monthly_fee }} €</p>
+                            <p>{{naryste.description}}</p>
+                            {% if user.is_authenticated %}
+                                <a href="#" class="btn custom-btn" style="font-size: 1rem; padding: 10px 20px; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">ĮSIGYTI</a>
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn custom-btn" style="font-size: 1rem; padding: 10px 20px; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">ĮSIGYTI</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

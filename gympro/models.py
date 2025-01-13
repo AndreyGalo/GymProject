@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.utils.timezone import now
+
 
 class MembershipPlan(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -12,12 +14,11 @@ class MembershipPlan(models.Model):
         choices=[
             ('paprastas', 'Paprastas'),
             ('premium', 'Premium'),
-            ('auksinis', 'Auksinis'),
             ('platinum', 'Platinum')]
     )
 
     def __str__(self):
-        return self.name
+        return f"Narystės planas: {self.name}"
 
     class Meta:
         ordering = ["name"]
@@ -36,7 +37,7 @@ class Member(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"User: {self.user} V.P.: {self.first_name} {self.last_name}"
 
     class Meta:
         ordering = ["last_name", "first_name"]
@@ -47,7 +48,7 @@ class Member(models.Model):
 class MembershipPurchase(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="purchases")
     membership_plan = models.ForeignKey(MembershipPlan, on_delete=models.CASCADE)
-    start_date = models.DateField(auto_now_add=True)
+    start_date = models.DateField(default=now)
     end_date = models.DateField(help_text="Narystės galiojimo pabaiga", null=True, blank=True)
 
     def __str__(self):
@@ -116,7 +117,8 @@ class Class(models.Model):
     ])
     instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name="classes")
-    sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True,related_name="classes")
+    sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name="classes")
     schedule = models.DateTimeField(help_text="Įveskite pamokos datą ir laiką.", default=timezone.now)
     max_capacity = models.IntegerField()
     current_bookings = models.IntegerField(default=0)
@@ -126,7 +128,7 @@ class Class(models.Model):
         return self.current_bookings >= self.max_capacity
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.class_type}"
 
     class Meta:
         ordering = ["name"]

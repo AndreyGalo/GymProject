@@ -18,14 +18,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="username">Vartotojo vardas</label>
+                        <label for="username">Vartotojo vardas*</label>
                         <input name="username" type="text" class="form-control form-control-sm" id="username" placeholder="Vartotojo vardas">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="first_name">Vardas</label>
+                        <label for="first_name">Vardas*</label>
                         <input name="first_name" type="text" class="form-control form-control-sm" id="first_name" placeholder="Įveskite savo vardą">
                     </div>
                 </div>
@@ -34,14 +34,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="last_name">Pavardė</label>
+                        <label for="last_name">Pavardė*</label>
                         <input name="last_name" type="text" class="form-control form-control-sm" id="last_name" placeholder="Įveskite savo pavardę">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="email">El. paštas</label>
+                        <label for="email">El. paštas*</label>
                         <input name="email" type="email" class="form-control form-control-sm" id="email" placeholder="Įveskite savo el. paštą">
                     </div>
                 </div>
@@ -50,14 +50,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="password">Slaptažodis</label>
+                        <label for="password">Slaptažodis*</label>
                         <input name="password" type="password" class="form-control form-control-sm" id="password" placeholder="Slaptažodis">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="password2">Pakartoti slaptažodį</label>
+                        <label for="password2">Pakartoti slaptažodį*</label>
                         <input name="password2" type="password" class="form-control form-control-sm" id="password2" placeholder="Pakartokite slaptažodį">
                     </div>
                 </div>
@@ -65,7 +65,8 @@
 
             <button type="submit" class="btn btn-primary btn-sm">Registruotis</button>
         </form>
-
+        <br>
+        <p>* - privalomi laukai</p>
         <p class="mt-3">Jeigu užsiregistravote anksčiau, <a href="{% url 'login'%}"><strong>prisijunkite.</strong></a></p>
     </div>
 </div>

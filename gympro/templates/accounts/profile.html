@@ -15,12 +15,20 @@
                             {% else %}
                                 <img src="{% static 'images/default_logo.png' %}" alt="Numatytasis logotipas">
                             {% endif %}
-                            <p>www{{ memberships.end_date}}</p>
+                            {% if membership_purchase %}
+                                {% if membership_purchase.membership_plan.name == "Paprastas" %}
+                                <p><a href="{% url 'narystes' %}">Pasiūlymas įsigyti aukštesnę narystę</a></p>
+                                {% else %}
+                                <p>GALIOJA NUO: {{ membership_purchase.start_date|date:"Y-m-d" }}</p>
+                                <p>GALIOJA IKI: {{ membership_purchase.end_date|date:"Y-m-d" }}</p>
+                                {% endif %}
+                            {% else %}
+                                <p><a href="{% url 'narystes' %}">Pasiūlymas įsigyti aukštesnę narystę</a></p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-
         <!-- Užregistruotos treniruotės -->
             <div class="card mb-4" style="background-color: #121212; color: white;">
                 <div class="card-body">
@@ -44,9 +52,7 @@
                                 <td>{{ booking.class_session.schedule|date:"Y-m-d H:i" }}</td>
                                 <td>{{ booking.booking_date|date:"Y-m-d H:i" }}</td>
                                 <td>
-                                    <a href="{% url 'unregister_class' class_id=booking.class_session.id %}" class="btn btn-danger">
-                                        Išsiregistruoti
-                                    </a>
+                                    <a href="{% url 'unregister_class' class_id=booking.class_session.id %}" class="btn btn-danger">Išsiregistruoti</a>
                                 </td>
                             </tr>
                             {% endfor %}
