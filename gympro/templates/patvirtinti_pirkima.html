@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="col-sm-10">
+    <h4>Patvirtinkite savo pirkimą</h4>
+    <div class="container" style="display: flex; justify-content: center; gap: 20px;">
+        <div class="card" style="width: 80%; margin: 20px 0; border-radius: 8px; background-color: #495057">
+            {% if naryste.photo %}
+                <img src="{{ naryste.photo.url }}" class="card-img-top" alt="logotipas" style="height: 500px; ">
+            {% else %}
+                <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="logotipas">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ naryste.name }}</h5>
+                <p>Kaina: {{ naryste.monthly_fee }} €</p>
+                <p>{{ naryste.description }}</p>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 30px; text-align: center;">
+        <h5>Banko sąskaitos informacija</h5>
+        <p>Norėdami atlikti mokėjimą bankiniu pavedimu, naudokite šią informaciją:</p>
+        <ul style="list-style-type: none; padding: 0; font-size: 1.1rem;">
+            <li><strong>Gavėjas:</strong> UAB Sporto GURU GYM</li>
+            <li><strong>Sąskaitos numeris:</strong> LT123456789012345678</li>
+            <li><strong>Bankas:</strong> Swedbank</li>
+            <li><strong>Paskirtis:</strong> Narystės planas {{ naryste.name }}. Vardas,Pavarde.</li>
+            <li><strong>Suma:</strong>  {{ naryste.monthly_fee }}</li>
+        </ul>
+        <p><strong>SVARBU:</strong> Patvirtinus pirkimą, narystė bus aktyvuota gavus mokėjimą.</p>
+        <br>
+        <a href="{% url 'patvirtinti_pirkima' naryste.id %}" class="btn btn-success">Apmokėjau</a>
+        <a href="{% url 'narystes' %}" class="btn btn-secondary">Atšaukti</a>
+    </div>
+       <div class="container" style="margin-top: 30px; text-align: center;">
+            <form method="post" action="{% url 'korteles_apmokejimas' naryste.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Apmokėti kortele</button>
+            </form>
+        </div>
+</div>
+{% endblock %}

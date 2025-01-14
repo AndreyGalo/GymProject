@@ -31,7 +31,8 @@
             <li><a href="{% url 'narystes' %}" class="btn btn-link">NARYSTĖS</a></li>
             <br><br><br>
             {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}" class="btn btn-link">Mano profilis</a></li>
+                <li><a href="{% url 'profile' %}" class="btn btn-link">mano narystė</a></li>
+                <li><a href="{% url 'manotreniruotes' %}" class="btn btn-link">mano treniruotės</a></li>
                 <li style="display: flex; justify-content: center; align-items: center;">
                     <form method="post" action="{% url 'logout' %}" style="display: inline;">
                         {% csrf_token %}

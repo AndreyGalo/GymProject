@@ -140,3 +140,7 @@ EMAIL_HOST_USER = 'sportoguruinfo@gmail.com'
 EMAIL_HOST_PASSWORD = 'nlzfgmhejfhdfeqp'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Stripe amokejimas kortele https://learndjango.com/tutorials/django-stripe-tutorial#configure-stripe
+STRIPE_PUBLIC_KEY = "pk_test_51Qh99RHJ1zExZtZvFQOUJC9VHUSWzsLsdbc0t0pxMldMjtr6JEjipAz7M4AoGGQWjv0ntojUTg5CrTAZIjogBDaq00cs48FYnB"
+STRIPE_SECRET_KEY = "sk_test_51Qh99RHJ1zExZtZv0vL0zu01ZduV9ywz1IxScXhM3axqwV3SnNVL6uqk8gQcGWN2aMm07GYEt8gKKCiPo0mHI1J000gm1AHPZV"

@@ -19,7 +19,7 @@
                             <p> {{ naryste.monthly_fee }} €</p>
                             <p>{{naryste.description}}</p>
                             {% if user.is_authenticated %}
-                                <a href="#" class="btn custom-btn" style="font-size: 1rem; padding: 10px 20px; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">ĮSIGYTI</a>
+                                <a href="{% url 'pirkti_naryste' naryste.id %}" class="btn custom-btn" style="font-size: 1rem; padding: 10px 20px; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">ĮSIGYTI</a>
                             {% else %}
                                 <a href="{% url 'login' %}" class="btn custom-btn" style="font-size: 1rem; padding: 10px 20px; border-radius: 5px; background-color: #007bff; color: white; transition: background-color 0.3s ease;">ĮSIGYTI</a>
                             {% endif %}

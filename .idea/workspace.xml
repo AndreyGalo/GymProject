@@ -4,20 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7dba3ed7-314b-4eb7-a648-ac9a33d55b24" name="Changes" comment="ketvirtas commit. sutvarkytos sales,pridetos registracijos ir saliu tvarkarastis. pridetas gmail password atstatymas. taip pat visi html sablonai.">
-      <change afterPath="$PROJECT_DIR$/gympro/validators.py" afterDir="false" />
+    <list default="true" id="7dba3ed7-314b-4eb7-a648-ac9a33d55b24" name="Changes" comment="Penktas commit. sutvarkytos Narystes. pridetas regex password patikrtinimas. pakoreguoti html,modeliai,views.">
+      <change afterPath="$PROJECT_DIR$/gympro/templates/accounts/manotreniruotes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gympro/templates/patvirtinti_pirkima.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gympro/templates/payment_cancel.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gympro/templates/payment_success.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gympro/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gympro/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gympro/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/signals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gympro/templates/accounts/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/accounts/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gympro/templates/narystes.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/narystes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gympro/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gympro/templates/sporto_sale.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/sporto_sale.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gympro/templates/treneris.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/treneris.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/tvarkarastis.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/tvarkarastis.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gympro/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gymsite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/gymsite/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -178,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736263958922</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Penktas commit. sutvarkytos Narystes. pridetas regex password patikrtinimas. pakoreguoti html,modeliai,views.">
+      <option name="closed" value="true" />
+      <created>1736784768584</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1736784768584</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -186,6 +197,7 @@
     <MESSAGE value="trecias commit. sutvarkytas tvarkarastis,sutvarkytas laiko rodymas treniruociu." />
     <MESSAGE value="antras commit. Pataisytas profilis,pridetas funkcionalumas isregistraciju." />
     <MESSAGE value="ketvirtas commit. sutvarkytos sales,pridetos registracijos ir saliu tvarkarastis. pridetas gmail password atstatymas. taip pat visi html sablonai." />
-    <option name="LAST_COMMIT_MESSAGE" value="ketvirtas commit. sutvarkytos sales,pridetos registracijos ir saliu tvarkarastis. pridetas gmail password atstatymas. taip pat visi html sablonai." />
+    <MESSAGE value="Penktas commit. sutvarkytos Narystes. pridetas regex password patikrtinimas. pakoreguoti html,modeliai,views." />
+    <option name="LAST_COMMIT_MESSAGE" value="Penktas commit. sutvarkytos Narystes. pridetas regex password patikrtinimas. pakoreguoti html,modeliai,views." />
   </component>
 </project>

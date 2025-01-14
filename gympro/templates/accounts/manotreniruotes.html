@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+    <div class="col-sm-10">
+        <h4 class="lead text-center">Užregistruotos treniruotės</h4>
+                <!-- Užregistruotos treniruotės -->
+            <div class="container_profilionaryste d-flex justify-content-center">
+                    {% if bookings %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Pavadinimas</th>
+                                <th>Treneris</th>
+                                <th>Treniruotės Data/laikas</th>
+                                <th>Registracijos data</th>
+                                <th>Veiksmai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in bookings %}
+                            <tr>
+                                <td>{{ booking.class_session.name }}</td>
+                                <td>{{ booking.class_session.instructor.first_name }} {{ booking.class_session.instructor.last_name }}</td>
+                                <td>{{ booking.class_session.schedule|date:"Y-m-d H:i" }}</td>
+                                <td>{{ booking.booking_date|date:"Y-m-d H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'unregister_class' class_id=booking.class_session.id %}" class="btn btn-danger">Išsiregistruoti</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>Šiuo metu neturite užsiregistruotų treniruočių.</p>
+                    {% endif %}
+                </div>
+        <h4 class="lead text-center">Mano statistika</h4>
+        <p class="text-center">Aplankytų treniruočių skaičius: {{ past_sessions_count }}</p>
+    </div>
+{% endblock %}

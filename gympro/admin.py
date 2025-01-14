@@ -26,7 +26,7 @@ class EquipmentAdmin(admin.ModelAdmin):
 
 class MemberAdmin(admin.ModelAdmin):
     list_display = (
-        "user", "first_name", "last_name", "email", "phone_number", "join_date", "membership_type", "active")
+        "user", "first_name", "last_name", "email", "phone_number", "join_date", "membership_type")
     readonly_fields = ('membership_type',)
 
 

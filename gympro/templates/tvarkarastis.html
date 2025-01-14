@@ -14,6 +14,7 @@
               <h5 class="card-title" style="color: #e57373;">{{ class.name }}</h5>
               <p class="card-text">{{ class.date }}</p>
               <p><strong>{{ class.time }}</strong></p>
+              <p>dalyviai: {{ class.current_bookings }} / {{ class.max_capacity }}</p>
               <p>
                  <a href="{% url 'treneris' instructor_id=class.coach_id %}">
                     {{ class.coach_vardas }} {{ class.coach_pavarde }}

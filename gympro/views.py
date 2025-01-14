@@ -1,5 +1,8 @@
 from datetime import timedelta
 
+import stripe
+from django.conf import settings
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -10,7 +13,7 @@ from django.utils.timezone import localtime, now
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
-from .models import Instructor, Class, SportHall, MembershipPlan, Booking
+from .models import Instructor, Class, SportHall, MembershipPlan, Booking, MembershipPurchase
 
 
 def index(request):
@@ -64,6 +67,27 @@ def narystes(request):
     return render(request, "narystes.html", context=context)
 
 
+@login_required
+def pirkti_naryste(request, narystes_id):
+    naryste = get_object_or_404(MembershipPlan, id=narystes_id)
+    context = {
+        'naryste': naryste,
+    }
+    return render(request, 'patvirtinti_pirkima.html', context)
+
+
+@login_required
+def patvirtinti_pirkima(request, narystes_id):
+    naryste = get_object_or_404(MembershipPlan, id=narystes_id)
+    member = request.user.member
+    MembershipPurchase.objects.create(
+        member=member,
+        membership_plan=naryste,
+        start_date=now(),
+    )
+    return redirect('profile')
+
+
 def tvarkarastis_view(request):
     """
     classes filtruojam turimam Class modelyje nustatytas pagal datas treniruotes --
@@ -88,6 +112,8 @@ def tvarkarastis_view(request):
             'coach_vardas': treniruote.instructor.first_name,
             'is_full': treniruote.is_full,
             'coach_id': treniruote.instructor.id,
+            'current_bookings': treniruote.current_bookings,  # Dabartinis registracijų skaičius
+            'max_capacity': treniruote.max_capacity,  # Maksimalus žmonių skaičius
         })
 
     context = {
@@ -161,13 +187,29 @@ def profile(request):
         'class_session__schedule')
     membership_purchase = member.purchases.order_by('-start_date').first()
     membership_photo = member.membership_type.photo
+    simple_membership_info = member.membership_type
     context = {
         'member': member,
         'bookings': bookings,
         'membership_purchase': membership_purchase,
         'membership_photo': membership_photo,
+        'simple_membership_info': simple_membership_info,
     }
     return render(request, 'accounts/profile.html', context=context)
+
+
+@login_required
+def manotreniruotes(request):
+    member = request.user.member
+    bookings = Booking.objects.filter(member=member, class_session__schedule__gte=now()).order_by(
+        'class_session__schedule')
+    past_sessions_count = Booking.objects.filter(member=member, class_session__schedule__lt=now()).count()
+    context = {
+        'member': member,
+        'bookings': bookings,
+        'past_sessions_count': past_sessions_count,
+    }
+    return render(request, 'accounts/manotreniruotes.html', context=context)
 
 
 @login_required
@@ -215,3 +257,46 @@ def unregister_success(request):
 
 def unregister_denied(request):
     return render(request, 'unregister_denied.html')
+
+
+# https://learndjango.com/tutorials/django-stripe-tutorial#configure-stripe
+# # https://dashboard.stripe.com/test/payments
+@login_required
+def korteles_apmokejimas(request, narystes_id):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    naryste = get_object_or_404(MembershipPlan, id=narystes_id)
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price_data": {
+                    "currency": "eur",
+                    "product_data": {
+                        "name": naryste.name,
+                    },
+                    "unit_amount": int(naryste.monthly_fee) * 100,
+                },
+                "quantity": 1,
+            }
+        ],
+        mode="payment",
+        success_url=request.build_absolute_uri(reverse("payment_success", args=[naryste.id])),
+        cancel_url=request.build_absolute_uri(reverse("payment_cancel")),
+    )
+    return redirect(checkout_session.url, code=303)
+
+
+@login_required
+def payment_success(request, narystes_id):
+    naryste = get_object_or_404(MembershipPlan, id=narystes_id)
+    member = request.user.member
+    MembershipPurchase.objects.create(
+        member=member,
+        membership_plan=naryste,
+        start_date=now(),
+    )
+    return render(request, "payment_success.html", {"naryste": naryste})
+
+
+def payment_cancel(request):
+    return render(request, "payment_cancel.html")
