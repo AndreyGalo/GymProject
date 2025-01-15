@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="col-sm-10">
+    <div class="container_treniruokliai">
+        <h4>Treniruokliai</h4>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            {% for treniruoklis in treniruokliai %}
+                <div class="col-md-4">
+                   <div style="width: 100%; border: 1px solid #ccc; border-radius: 10px; padding: 20px; height: 500px; display: flex; flex-direction: column; box-sizing: border-box;">
+                        {% if treniruoklis.photo %}
+                            <img src="{{ treniruoklis.photo.url }}" class="card-img-top" alt="sales foto" style="height: 500px; width: 100%; object-fit: cover; border-radius: 5px;">
+                        {% else %}
+                            <img src="{% static 'images/logo.png' %}" class="card-img-top" alt="logotipas" style="height: 250px; width: 100%; object-fit: cover; border-radius: 5px;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-bottom: 20px;">{{ treniruoklis.name }}</h5>
+                            <p class="card-text" style="margin: 5px 0;">{{ treniruoklis.equipment_type }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container_treniruokliai_puslapiavimas">
+    <nav aria-label="...">
+        {% if treniruokliai.has_other_pages %}
+            <ul class="pagination pagination-sm justify-content-end">
+                {% for i in treniruokliai.paginator.page_range %}
+                    {% if treniruokliai.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link" style="background-color: #495057; color: white;">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}" style="background-color: #495057; color: white;">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </nav>
+</div>
+</div>
+{% endblock %}

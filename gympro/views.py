@@ -7,21 +7,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.utils.timezone import localtime, now
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
-from .models import Instructor, Class, SportHall, MembershipPlan, Booking, MembershipPurchase
+from .models import Instructor, Class, SportHall, MembershipPlan, Booking, MembershipPurchase, Equipment
 
 
 def index(request):
-    instruktoriai = Instructor.objects.all().count()
-    context = {
-        'instruktoriai': instruktoriai,
-    }
-    return render(request, "index.html", context=context)
+    return render(request, "index.html")
 
 
 def apiemus(request):
@@ -70,10 +68,12 @@ def narystes(request):
 @login_required
 def pirkti_naryste(request, narystes_id):
     naryste = get_object_or_404(MembershipPlan, id=narystes_id)
+    member = request.user.member
     context = {
         'naryste': naryste,
+        'member': member,
     }
-    return render(request, 'patvirtinti_pirkima.html', context)
+    return render(request, 'patvirtinti_pirkima.html', context=context)
 
 
 @login_required
@@ -127,7 +127,7 @@ def tvarkarastis_view(request):
 @csrf_protect
 def register(request):
     """
-    Registracijos funkcija su slaptažodžio patikrinimu ir privalomais laukais.
+    Registracijos funkcija su slaptažodžio ir email patikrinimu ir privalomais laukais.
     """
     if request.method == "POST":
         # Pasiimame reikšmes iš registracijos formos
@@ -154,6 +154,13 @@ def register(request):
         except ValidationError as e:
             for error in e.messages:
                 messages.error(request, error)
+            return redirect('register')
+
+        # Tikriname, ar el. paštas teisingas
+        try:
+            EmailValidator()(email)
+        except ValidationError:
+            messages.error(request, "Neteisingas el. pašto adresas!")
             return redirect('register')
 
         # Tikriname, ar vartotojo vardas užimtas
@@ -240,11 +247,9 @@ def unregister_class(request, class_id):
     klase = get_object_or_404(Class, id=class_id)
     booking = Booking.objects.filter(member=member, class_session=klase).first()
 
-    # Patikriname, ar iki treniruotės pradžios liko daugiau nei 24 valandos
     if klase.schedule - now() < timedelta(hours=24):
         return redirect('unregister_denied')
 
-    # Pašaliname registraciją
     booking.delete()
     klase.current_bookings -= 1
     klase.save()
@@ -295,8 +300,17 @@ def payment_success(request, narystes_id):
         membership_plan=naryste,
         start_date=now(),
     )
-    return render(request, "payment_success.html", {"naryste": naryste})
+    context = {'naryste': naryste}
+    return render(request, "payment_success.html", context=context)
 
 
 def payment_cancel(request):
     return render(request, "payment_cancel.html")
+
+
+def treniruokliai(request):
+    paginator = Paginator(Equipment.objects.all(), 6)
+    page_number = request.GET.get('page')
+    treniruokliai = paginator.get_page(page_number)
+    context = {'treniruokliai': treniruokliai}
+    return render(request, "treniruokliai.html", context=context)

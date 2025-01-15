@@ -31,13 +31,21 @@
         </ul>
         <p><strong>SVARBU:</strong> Patvirtinus pirkimą, narystė bus aktyvuota gavus mokėjimą.</p>
         <br>
-        <a href="{% url 'patvirtinti_pirkima' naryste.id %}" class="btn btn-success">Apmokėjau</a>
-        <a href="{% url 'narystes' %}" class="btn btn-secondary">Atšaukti</a>
+        {% if member.membership_type == naryste %}
+            <button class="btn btn-success" disabled>Jūs jau turite šią narystę</button>
+        {% else %}
+            <a href="{% url 'patvirtinti_pirkima' naryste.id %}" class="btn btn-success">Apmokėjau</a>
+        {% endif %}
+            <a href="{% url 'narystes' %}" class="btn btn-secondary">Atšaukti</a>
     </div>
-       <div class="container" style="margin-top: 30px; text-align: center;">
+        <div class="container" style="margin-top: 30px; text-align: center;">
             <form method="post" action="{% url 'korteles_apmokejimas' naryste.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Apmokėti kortele</button>
+                {% if member.membership_type == naryste %}
+                    <br>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Apmokėti kortele</button>
+                {% endif %}
             </form>
         </div>
 </div>

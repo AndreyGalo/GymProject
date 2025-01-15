@@ -113,6 +113,9 @@ class Class(models.Model):
         ('zumba', 'Zumba'),
         ('fitness', 'Fitness'),
         ('dance', 'Dance'),
+        ('gym-training', 'Gym-training'),
+        ('power-lift', 'Power-lift'),
+
     ])
     instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name="classes")
@@ -163,6 +166,7 @@ class Equipment(models.Model):
         ('geras', 'Geras'),
         ('reikalauja aptarnavimo', 'Reikalauja aptarnavimo')
     ])
+    photo = models.ImageField(upload_to='treniruokliai_photos/', blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -25,4 +25,5 @@ urlpatterns = [
     path('korteles-apmokejimas/<int:narystes_id>/', views.korteles_apmokejimas, name='korteles_apmokejimas'),
     path('payment-success/<int:narystes_id>/', views.payment_success, name='payment_success'),
     path('payment-cancel/', views.payment_cancel, name='payment_cancel'),
+    path('treniruokliai/', views.treniruokliai, name='treniruokliai'),
 ]

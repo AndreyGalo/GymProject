@@ -7,8 +7,8 @@ from .models import Member, MembershipPlan, MembershipPurchase
 
 
 # Sukurus vartotoją automatiskai sukuriamas ir narys(Member).
-@receiver(post_save, sender=User)  # jeigu išsaugojamas User objektas, inicijuojama f-ja po dekoratoriumi
-def create_profile(sender, instance, created, **kwargs):  # instance yra ką tik sukurtas User objektas.
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
     """
     default_membership kintamasis kuris pasiima Membershipplan objektus,suranda "Paprastas" naryste ir pasiima ja per GET metoda.
     objects.create sukurdamas priskiria Member modeliui membership_type paimta is GET metodo "Paprastas" naryste ir priskiria ja,naujai sukurtam vartotojui.
@@ -31,7 +31,7 @@ def delete_user_with_member(sender, instance, **kwargs):
         instance.user.delete()
 
 
-# Pakeitus vartotoja automatiskai pasikeicia nario profilis.
+# Pakeitus user vartotoja automatiskai pasikeicia nario(member) profilis.
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     instance.member.save()
@@ -40,9 +40,6 @@ def save_profile(sender, instance, **kwargs):
 # Pridejus/Pakeitus Narystes PIRKIMA automatiskai priskiria nauja Naryste vartotojui(Member)
 @receiver(post_save, sender=MembershipPurchase)
 def update_member_membership(sender, instance, **kwargs):
-    """
-    Signalas atnaujina naryste `Member` modelyje po pakeitimo Admin puslapyje.
-    """
     member = instance.member
     if member:
         # Atnaujiname narystės tipą Member modelyje pagal paskutinį MembershipPurchase
@@ -50,15 +47,15 @@ def update_member_membership(sender, instance, **kwargs):
         member.save()
 
 
-# Narystes pirkimas arba per admino pridejimas automatiskai priskria 30 dienu
+# Narystes pirkimas arba per admino pridejimas(narystes pirkima) automatiskai priskria 30 dienu
 @receiver(post_save, sender=MembershipPurchase)
 def set_end_date(sender, instance, created, **kwargs):
-    if created and not instance.end_date:  # Tik naujai sukurtiems objektams
+    if created and not instance.end_date:
         instance.end_date = instance.start_date + timedelta(days=30)
         instance.save()
 
 
-# Narystes pasalinimas per admino puslapi automatiskai priskiria Paprasta naryste
+# Narystes PIRKIMO pasalinimas per admino puslapi automatiskai priskiria Paprasta naryste
 @receiver(post_delete, sender=MembershipPurchase)
 def remove_membership_from_member(sender, instance, **kwargs):
     member = instance.member

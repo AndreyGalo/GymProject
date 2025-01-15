@@ -8,7 +8,7 @@
             {% if sale.photo %}
                 <img src="{{ sale.photo.url }}" alt="#" class="img-thumbnail">
             {% else %}
-                <p>Nuotrauka nepateikta.</p>
+                <br>
             {% endif %}
         </div>
         <h4>Salės treniruotės</h4>
@@ -49,6 +49,12 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="treniruokliu mygtukas" style="text-align: center; margin-top: 20px;">
+        {% if sale.hall_type == 'treniruokliu' %}
+            <p>Į treniruoklių salę galima eiti bet kuriuo metu darbo valandomis, kad atliktumėte individualius užsiėmimus.</p>
+            <a href="{% url 'treniruokliai' %}" class="btn btn-info">Peržiūrėti turimus treniruoklius</a>
+        {% endif %}
         </div>
     </div>
 </div>

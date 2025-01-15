@@ -1,8 +1,7 @@
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext as _
 import re
 
-#https://docs.djangoproject.com/en/5.1/topics/auth/passwords/#django.contrib.auth.password_validation.validate_password
+#Password validatorius su regex tikrina ar ivestam slaptazodyje yra skaicius
 class CustomPasswordValidator:
     """
     https://awstip.com/create-your-own-custom-password-validator-in-django-6bc75ddcf126
