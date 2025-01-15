@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7dba3ed7-314b-4eb7-a648-ac9a33d55b24" name="Changes" comment="septintas commit&#10;pataisytas email patikrinimas,pataisytas signalas istrinimo narystes. prideti html treniruokliu ir views ir url.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="7dba3ed7-314b-4eb7-a648-ac9a33d55b24" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736938195212</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix">
+      <option name="closed" value="true" />
+      <created>1736941959504</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1736941959504</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -203,6 +209,7 @@
     <MESSAGE value="Penktas commit. sutvarkytos Narystes. pridetas regex password patikrtinimas. pakoreguoti html,modeliai,views." />
     <MESSAGE value="sestas commit. &#10;pridetas mokejimas kortele,apmokejimas banku. &#10;narystes iskaiciavimas vartotojui." />
     <MESSAGE value="septintas commit&#10;pataisytas email patikrinimas,pataisytas signalas istrinimo narystes. prideti html treniruokliu ir views ir url." />
-    <option name="LAST_COMMIT_MESSAGE" value="septintas commit&#10;pataisytas email patikrinimas,pataisytas signalas istrinimo narystes. prideti html treniruokliu ir views ir url." />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
 </project>

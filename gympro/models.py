@@ -33,7 +33,7 @@ class Member(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     join_date = models.DateField(auto_now_add=True)
-    membership_type = models.ForeignKey("MembershipPlan", on_delete=models.SET_NULL, null=True, default=4,related_name="purchases")
+    membership_type = models.ForeignKey("MembershipPlan", on_delete=models.SET_NULL, null=True, blank=True,related_name="purchases")
 
     def __str__(self):
         return f"User: {self.user} V.P.: {self.first_name} {self.last_name}"
