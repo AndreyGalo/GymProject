@@ -1,5 +1,3 @@
-from django.utils.timezone import localtime
-
 from django.contrib import admin
 from .models import Class, Booking, Equipment, Member, MembershipPlan, Instructor, SportHall, MembershipPurchase
 
