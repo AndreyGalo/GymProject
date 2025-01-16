@@ -88,13 +88,6 @@ def patvirtinti_pirkima(request, narystes_id):
 
 
 def tvarkarastis_view(request):
-    """
-    classes filtruojam turimam Class modelyje nustatytas pagal datas treniruotes --
-    kur: date_GREATER THAN OR EQUAL(Django ORM Filters)=today(siandienos data).
-    for ciklas,iteruojam per turimas treniruotes musu classes sarase
-    ir pridedam i nauja sarasa/kintamaji schedule pakeistu datos,laiko formatu ir tiksliu treniruoes pavadinimu(name)
-
-    """
     classes = Class.objects.filter(schedule__gte=now()).order_by('schedule')
     paginator = Paginator(classes, 12)
     page_number = request.GET.get('page')

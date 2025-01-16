@@ -1,18 +1,14 @@
 from datetime import timedelta
 
-from django.db.models.signals import post_save, post_delete  # signalas (būna įvairių)
-from django.contrib.auth.models import User  # siuntėjas
-from django.dispatch import receiver  # priėmėjas (dekoratorius)
+from django.db.models.signals import post_save, post_delete
+from django.contrib.auth.models import User
+from django.dispatch import receiver
 from .models import Member, MembershipPlan, MembershipPurchase
 
 
 # Sukurus vartotoją automatiskai sukuriamas ir narys(Member).
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    """
-    default_membership kintamasis kuris pasiima Membershipplan objektus,suranda "Paprastas" naryste ir pasiima ja per GET metoda.
-    objects.create sukurdamas priskiria Member modeliui membership_type paimta is GET metodo "Paprastas" naryste ir priskiria ja,naujai sukurtam vartotojui.
-    """
     if created:
         default_membership = MembershipPlan.objects.get(name="Paprastas")
         Member.objects.create(

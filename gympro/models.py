@@ -118,10 +118,8 @@ class Class(models.Model):
         ('power-lift', 'Power-lift'),
 
     ])
-    instructor = models.ForeignKey("Instructor", on_delete=models.SET_NULL, null=True, blank=True,
-                                   related_name="classes")
-    sport_hall = models.ForeignKey("SportHall", on_delete=models.SET_NULL, null=True, blank=True,
-                                   related_name="classes")
+    instructor = models.ForeignKey("Instructor", on_delete=models.CASCADE, related_name="classes")
+    sport_hall = models.ForeignKey("SportHall", on_delete=models.CASCADE, related_name="classes")
     schedule = models.DateTimeField(help_text="Įveskite pamokos datą ir laiką.", default=timezone.now)
     max_capacity = models.IntegerField()
     current_bookings = models.IntegerField(default=0)
@@ -141,7 +139,7 @@ class Class(models.Model):
 
 class Booking(models.Model):
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
-    class_session = models.ForeignKey("Class", on_delete=models.CASCADE, null=True, blank=True, related_name="classes")
+    class_session = models.ForeignKey("Class", on_delete=models.CASCADE, related_name="classes")
     booking_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
