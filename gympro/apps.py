@@ -7,4 +7,3 @@ class GymproConfig(AppConfig):
 
     def ready(self):
         import gympro.signals
-

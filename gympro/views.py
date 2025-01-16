@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
-from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.utils.timezone import localtime, now
 from django.shortcuts import render, redirect, get_object_or_404
@@ -112,8 +111,8 @@ def tvarkarastis_view(request):
             'coach_vardas': treniruote.instructor.first_name,
             'is_full': treniruote.is_full,
             'coach_id': treniruote.instructor.id,
-            'current_bookings': treniruote.current_bookings,  # Dabartinis registracijų skaičius
-            'max_capacity': treniruote.max_capacity,  # Maksimalus žmonių skaičius
+            'current_bookings': treniruote.current_bookings,
+            'max_capacity': treniruote.max_capacity,
         })
 
     context = {

@@ -33,7 +33,8 @@ class Member(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     join_date = models.DateField(auto_now_add=True)
-    membership_type = models.ForeignKey("MembershipPlan", on_delete=models.SET_NULL, null=True, blank=True,related_name="purchases")
+    membership_type = models.ForeignKey("MembershipPlan", on_delete=models.SET_NULL, null=True, blank=True,
+                                        related_name="purchases")
 
     def __str__(self):
         return f"User: {self.user} V.P.: {self.first_name} {self.last_name}"
@@ -140,7 +141,7 @@ class Class(models.Model):
 
 class Booking(models.Model):
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
-    class_session = models.ForeignKey("Class", on_delete=models.CASCADE, null=True, blank=True,related_name="classes")
+    class_session = models.ForeignKey("Class", on_delete=models.CASCADE, null=True, blank=True, related_name="classes")
     booking_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

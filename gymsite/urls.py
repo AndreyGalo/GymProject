@@ -24,11 +24,10 @@ from django.views.generic import RedirectView
 from gympro import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('gympro/', include('gympro.urls')),
-    path("",RedirectView.as_view(url="/gympro/", permanent=True)),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('profile/', login_required(views.profile), name='profile'),
-] + (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
-    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
-
+                  path('admin/', admin.site.urls),
+                  path('gympro/', include('gympro.urls')),
+                  path("", RedirectView.as_view(url="/gympro/", permanent=True)),
+                  path('accounts/', include('django.contrib.auth.urls')),
+                  path('profile/', login_required(views.profile), name='profile'),
+              ] + (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
+                   static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))

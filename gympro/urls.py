@@ -4,8 +4,8 @@ from gympro import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('apiemus/',views.apiemus,name="apiemus"),
-    path('treneriai/',views.treneriai,name="treneriai"),
+    path('apiemus/', views.apiemus, name="apiemus"),
+    path('treneriai/', views.treneriai, name="treneriai"),
     path('treneris/<int:instructor_id>/', views.treneris, name='treneris'),
     path('tvarkarastis/', views.tvarkarastis_view, name='tvarkarastis'),
     path('sporto-sales/', views.sportosales, name='sporto_sales'),
@@ -20,7 +20,7 @@ urlpatterns = [
     path('unregister-class/<int:class_id>/', views.unregister_class, name='unregister_class'),
     path('registration-success/', views.registration_success, name='registration_success'),
     path('unregister-success/', views.unregister_success, name='unregister_success'),
-    path('unregister-denied/',views.unregister_denied,name='unregister_denied'),
+    path('unregister-denied/', views.unregister_denied, name='unregister_denied'),
     path('already-registered/', views.already_registered, name='already_registered'),
     path('korteles-apmokejimas/<int:narystes_id>/', views.korteles_apmokejimas, name='korteles_apmokejimas'),
     path('payment-success/<int:narystes_id>/', views.payment_success, name='payment_success'),

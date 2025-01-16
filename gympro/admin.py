@@ -1,4 +1,3 @@
-from django.utils import timezone
 from django.utils.timezone import localtime
 
 from django.contrib import admin
@@ -7,10 +6,10 @@ from .models import Class, Booking, Equipment, Member, MembershipPlan, Instructo
 
 class ClassAdmin(admin.ModelAdmin):
     list_display = (
-    "name", "class_type", "instructor", "sport_hall", "formatted_schedule", "max_capacity", "current_bookings")
+        "name", "class_type", "instructor", "sport_hall", "formatted_schedule", "max_capacity", "current_bookings")
     ordering = ('schedule',)
+
     def formatted_schedule(self, obj):
-        # Naudojame localtime, kad parodytume teisingą laiką pagal nustatytą laiko zoną
         return localtime(obj.schedule).strftime('%Y-%m-%d %H:%M')
 
     formatted_schedule.admin_order_field = 'schedule'

@@ -1,12 +1,14 @@
 from django.core.exceptions import ValidationError
 import re
 
-#Password validatorius su regex tikrina ar ivestam slaptazodyje yra skaicius
+
+# Password validatorius su regex tikrina ar ivestam slaptazodyje yra skaicius
 class CustomPasswordValidator:
     """
     https://awstip.com/create-your-own-custom-password-validator-in-django-6bc75ddcf126
     https://docs.djangoproject.com/en/5.1/topics/auth/passwords/#django.contrib.auth.password_validation.validate_password
     """
+
     def validate(self, password, user=None):
         if not re.search(r'\d', password):
             raise ValidationError(

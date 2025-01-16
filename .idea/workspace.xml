@@ -4,8 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7dba3ed7-314b-4eb7-a648-ac9a33d55b24" name="Changes" comment="fix">
+    <list default="true" id="7dba3ed7-314b-4eb7-a648-ac9a33d55b24" name="Changes" comment="pataisytas Member modelis membership_type default nuimtas,signalas priskiria automatiskai &quot;Paprastas&quot; naryste naujam vartotojui.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/accounts/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/accounts/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/registration_success.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/registration_success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/tvarkarastis.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/tvarkarastis.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/unregister_denied.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/unregister_denied.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/templates/unregister_success.html" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/templates/unregister_success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/validators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gympro/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/gympro/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gymsite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/gymsite/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736941959504</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="pataisytas Member modelis membership_type default nuimtas,signalas priskiria automatiskai &quot;Paprastas&quot; naryste naujam vartotojui.">
+      <option name="closed" value="true" />
+      <created>1736946402863</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1736946402863</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -210,6 +233,7 @@
     <MESSAGE value="sestas commit. &#10;pridetas mokejimas kortele,apmokejimas banku. &#10;narystes iskaiciavimas vartotojui." />
     <MESSAGE value="septintas commit&#10;pataisytas email patikrinimas,pataisytas signalas istrinimo narystes. prideti html treniruokliu ir views ir url." />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="pataisytas Member modelis membership_type default nuimtas,signalas priskiria automatiskai &quot;Paprastas&quot; naryste naujam vartotojui." />
+    <option name="LAST_COMMIT_MESSAGE" value="pataisytas Member modelis membership_type default nuimtas,signalas priskiria automatiskai &quot;Paprastas&quot; naryste naujam vartotojui." />
   </component>
 </project>
